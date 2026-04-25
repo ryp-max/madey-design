@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Madey Design — Handcrafted Woodwork</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <a href="#" class="nav-logo">madey</a>
+    <ul class="nav-links">
+      <li><a href="#products">shop</a></li>
+      <li><a href="#about">about</a></li>
+      <li><a href="#contact">contact</a></li>
+    </ul>
+    <button class="nav-hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-image-wrap">
+      <img src="images/hero.jpg" alt="Handcrafted wood piece" class="hero-img" onerror="this.closest('.hero-image-wrap').classList.add('placeholder')" />
+    </div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">handcrafted in small batches</p>
+      <h1 class="hero-title">Made by hand.<br />Made to last.</h1>
+      <a href="#products" class="btn">explore pieces</a>
+    </div>
+  </section>
+
+  <!-- PRODUCTS -->
+  <section class="products" id="products">
+    <div class="container">
+      <header class="section-header">
+        <h2 class="section-title">the collection</h2>
+        <p class="section-sub">Each piece is one-of-a-kind, shaped from natural wood and finished by hand.</p>
+      </header>
+
+      <div class="product-grid" id="productGrid">
+        <!-- populated by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about" id="about">
+    <div class="container about-inner">
+      <div class="about-image-wrap">
+        <img src="images/about.jpg" alt="Workshop" onerror="this.closest('.about-image-wrap').classList.add('placeholder')" />
+      </div>
+      <div class="about-text">
+        <p class="hero-eyebrow">the story</p>
+        <h2 class="section-title">Slow work,<br />real craft.</h2>
+        <p>Every piece starts with a conversation between the wood and the maker. No shortcuts, no templates — just careful hands and honest materials.</p>
+        <p>Madey Design is a small studio making functional objects that feel good to live with. Built to be used, worn, and passed on.</p>
+        <a href="https://www.instagram.com/madeydesign" target="_blank" rel="noopener" class="btn btn-outline">follow on instagram</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT / ORDER -->
+  <section class="contact" id="contact">
+    <div class="container contact-inner">
+      <header class="section-header">
+        <h2 class="section-title">get in touch</h2>
+        <p class="section-sub">Inquiries, custom orders, or just to say hello — I'd love to hear from you.</p>
+      </header>
+
+      <form class="contact-form" id="contactForm">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="name">name</label>
+            <input type="text" id="name" name="name" placeholder="your name" required />
+          </div>
+          <div class="form-group">
+            <label for="email">email</label>
+            <input type="email" id="email" name="email" placeholder="your@email.com" required />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="interest">interested in</label>
+          <select id="interest" name="interest">
+            <option value="">— select a piece or custom order —</option>
+            <option value="cutting-board">Cutting Board</option>
+            <option value="serving-tray">Serving Tray</option>
+            <option value="end-grain-board">End-Grain Board</option>
+            <option value="shelf">Floating Shelf</option>
+            <option value="bowl">Turned Bowl</option>
+            <option value="custom">Custom Order</option>
+            <option value="other">Other / Just saying hi</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="message">message</label>
+          <textarea id="message" name="message" rows="5" placeholder="Tell me what you're looking for, any dimensions, wood preferences, timeline..." required></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-full">send message</button>
+        <p class="form-note">I typically reply within 1–2 days.</p>
+      </form>
+
+      <div class="form-success" id="formSuccess" hidden>
+        <p>✦ Message sent — I'll be in touch soon.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <span class="nav-logo">madey</span>
+      <p>© 2025 Madey Design. All rights reserved.</p>
+      <a href="https://www.instagram.com/madeydesign" target="_blank" rel="noopener" class="footer-ig">instagram</a>
+    </div>
+  </footer>
+
+  <!-- PRODUCT MODAL -->
+  <div class="modal-overlay" id="modalOverlay" hidden>
+    <div class="modal" id="modal">
+      <button class="modal-close" id="modalClose" aria-label="Close">✕</button>
+      <div class="modal-image-wrap">
+        <img id="modalImg" src="" alt="" onerror="this.closest('.modal-image-wrap').classList.add('placeholder')" />
+      </div>
+      <div class="modal-body">
+        <p class="hero-eyebrow" id="modalCategory"></p>
+        <h3 class="modal-title" id="modalName"></h3>
+        <p class="modal-price" id="modalPrice"></p>
+        <p class="modal-desc" id="modalDesc"></p>
+        <p class="modal-dims" id="modalDims"></p>
+        <a href="#contact" class="btn btn-full" id="modalCta">inquire about this piece</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="products.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
