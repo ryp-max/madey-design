@@ -1,17 +1,19 @@
-const { put, get } = require('@vercel/blob');
+let blobModule;
+try { blobModule = require('@vercel/blob'); } catch { blobModule = null; }
 const { Resend }   = require('resend');
 
 const resend          = new Resend(process.env.RESEND_API_KEY);
 const OWNER_EMAIL     = 'rachelyedampark@gmail.com';
-const FROM_EMAIL      = 'orders@madey.com';        // must be verified in Resend
+const FROM_EMAIL      = 'onboarding@resend.dev';   // temporary until madey.com is verified in Resend
 const ORDERS_BLOB_URL = process.env.ORDERS_BLOB_URL; // set after first deploy (see readme)
 const ORDERS_KEY      = 'madey-orders/orders.json';
 
 /* ── helpers ── */
 
 async function loadOrders() {
+  if (!blobModule || !process.env.BLOB_READ_WRITE_TOKEN) return [];
   try {
-    const blob = await get(ORDERS_KEY);
+    const blob = await blobModule.get(ORDERS_KEY);
     if (!blob) return [];
     const text = await fetch(blob.url).then(r => r.text());
     return JSON.parse(text);
@@ -21,7 +23,8 @@ async function loadOrders() {
 }
 
 async function saveOrders(orders) {
-  await put(ORDERS_KEY, JSON.stringify(orders, null, 2), {
+  if (!blobModule || !process.env.BLOB_READ_WRITE_TOKEN) return;
+  await blobModule.put(ORDERS_KEY, JSON.stringify(orders, null, 2), {
     access: 'public',
     addRandomSuffix: false,
     contentType: 'application/json',
