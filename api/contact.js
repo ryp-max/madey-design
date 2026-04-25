@@ -4,7 +4,7 @@ const { Resend }   = require('resend');
 
 const resend          = new Resend(process.env.RESEND_API_KEY);
 const OWNER_EMAIL     = 'rachelyedampark@gmail.com';
-const FROM_EMAIL      = 'onboarding@resend.dev';   // temporary until madey.com is verified in Resend
+const FROM_EMAIL      = 'orders@madey.com';
 const ORDERS_BLOB_URL = process.env.ORDERS_BLOB_URL; // set after first deploy (see readme)
 const ORDERS_KEY      = 'madey-orders/orders.json';
 
