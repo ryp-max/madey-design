@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://madey.com/sitemap.xml

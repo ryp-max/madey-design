@@ -113,8 +113,11 @@ form.addEventListener('submit', async e => {
       body: JSON.stringify(data)
     });
     if (res.ok) {
+      const { orderNumber } = await res.json();
       form.hidden = true;
       formSuccess.hidden = false;
+      const confirm = document.getElementById('orderConfirm');
+      if (confirm && orderNumber) confirm.textContent = `Inquiry #${orderNumber} — check your email for confirmation.`;
     } else throw new Error();
   } catch {
     const subject = encodeURIComponent(`Madey Design — ${data.interest || 'Inquiry'}`);
