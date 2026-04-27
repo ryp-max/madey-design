@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Madey Design — Handcrafted Woodwork</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Inter:wght@300;400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav" id="nav">
+    <a href="#" class="nav-logo">madey</a>
+    <ul class="nav-links">
+      <li><a href="#shop">shop</a></li>
+      <li><a href="#about">about</a></li>
+      <li><a href="#contact">contact</a></li>
+      <li><a href="https://www.instagram.com/madeydesign" target="_blank" rel="noopener">instagram ↗</a></li>
+    </ul>
+    <button class="nav-hamburger" aria-label="Menu">
+      <span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobileMenu" hidden>
+    <button class="mobile-menu-close" id="mobileClose">✕</button>
+    <ul>
+      <li><a href="#shop">shop</a></li>
+      <li><a href="#about">about</a></li>
+      <li><a href="#contact">contact</a></li>
+      <li><a href="https://www.instagram.com/madeydesign" target="_blank" rel="noopener">instagram ↗</a></li>
+    </ul>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-img-wrap img-wrap">
+      <img src="/images/hero.jpg" alt="" aria-hidden="true"
+           onerror="this.closest('.hero-img-wrap').classList.add('no-img')" />
+    </div>
+    <div class="hero-caption">
+      <p>handcrafted in small batches</p>
+    </div>
+    <div class="hero-title-block">
+      <h1>Made by hand.<br/><em>Made to last.</em></h1>
+      <a href="#shop" class="scroll-cue">↓ the collection</a>
+    </div>
+  </section>
+
+  <!-- SHOP -->
+  <section class="shop" id="shop">
+    <div class="shop-header">
+      <h2>the collection</h2>
+    </div>
+    <div class="shop-grid" id="shopGrid"></div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about" id="about">
+    <div class="about-img-wrap img-wrap">
+      <img src="/images/about.jpg" alt="The workshop"
+           onerror="this.closest('.about-img-wrap').classList.add('no-img')" />
+    </div>
+    <div class="about-text">
+      <span class="label">the story</span>
+      <h2>Slow work,<br/><em>real craft.</em></h2>
+      <p>Every piece starts with a conversation between the wood and the maker. No shortcuts, no templates — just careful hands and honest materials.</p>
+      <p>Madey Design is a small studio making functional objects that feel good to live with. Built to be used, worn in, and passed on.</p>
+      <a href="https://www.instagram.com/madeydesign" target="_blank" rel="noopener" class="text-link">follow the work on instagram ↗</a>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact" id="contact">
+    <div class="contact-inner">
+      <div class="contact-left">
+        <span class="label">get in touch</span>
+        <h2>Custom orders,<br/><em>questions, hellos.</em></h2>
+        <p>I take on a limited number of commissions each month. Reach out to check availability or discuss a piece.</p>
+        <p class="reply-note">Typically reply within 1–2 days.</p>
+      </div>
+      <form class="contact-form" id="contactForm">
+        <div class="field">
+          <input type="text" id="name" name="name" placeholder="name" required />
+        </div>
+        <div class="field">
+          <input type="email" id="email" name="email" placeholder="email" required />
+        </div>
+        <div class="field">
+          <select id="interest" name="interest">
+            <option value="">what are you after?</option>
+            <option value="cutting-board">Cutting Board</option>
+            <option value="serving-tray">Serving Tray</option>
+            <option value="end-grain-board">End-Grain Board</option>
+            <option value="shelf">Floating Shelf</option>
+            <option value="bowl">Turned Bowl</option>
+            <option value="custom">Custom Order</option>
+            <option value="other">Just saying hi</option>
+          </select>
+        </div>
+        <div class="field">
+          <textarea id="message" name="message" rows="4" placeholder="tell me more..." required></textarea>
+        </div>
+        <button type="submit" class="submit-btn">send →</button>
+      </form>
+      <div class="form-success" id="formSuccess" hidden>
+        <p>Message sent —<br/>talk soon.</p>
+        <p class="order-confirm" id="orderConfirm"></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <span class="nav-logo">madey</span>
+    <p>© 2025 Madey Design</p>
+    <a href="https://www.instagram.com/madeydesign" target="_blank" rel="noopener">@madeydesign</a>
+  </footer>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox" hidden>
+    <button class="lb-close" id="lbClose">✕</button>
+    <button class="lb-prev" id="lbPrev">←</button>
+    <button class="lb-next" id="lbNext">→</button>
+    <div class="lb-img-wrap img-wrap">
+      <img id="lbImg" src="" alt="" />
+    </div>
+    <div class="lb-info">
+      <p class="lb-name" id="lbName"></p>
+      <p class="lb-price" id="lbPrice"></p>
+      <p class="lb-desc" id="lbDesc"></p>
+      <p class="lb-dims" id="lbDims"></p>
+      <a href="#contact" class="lb-cta" id="lbCta">inquire →</a>
+    </div>
+  </div>
+
+  <script src="/products.js"></script>
+  <script src="/app.js"></script>
+</body>
+</html>
