@@ -1,12 +1,3 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
-  <!-- Cutting board body -->
-  <rect x="4" y="8" width="22" height="16" rx="3" fill="#7a5c3e"/>
-  <!-- Handle -->
-  <rect x="22" y="13" width="7" height="6" rx="2" fill="#5c3d1e"/>
-  <!-- Wood grain lines -->
-  <line x1="8" y1="12" x2="20" y2="12" stroke="#c9b99a" stroke-width="1.2" stroke-linecap="round" opacity="0.5"/>
-  <line x1="8" y1="16" x2="20" y2="16" stroke="#c9b99a" stroke-width="1.2" stroke-linecap="round" opacity="0.5"/>
-  <line x1="8" y1="20" x2="20" y2="20" stroke="#c9b99a" stroke-width="1.2" stroke-linecap="round" opacity="0.5"/>
-  <!-- Hang hole -->
-  <circle cx="26" cy="16" r="1.5" fill="#f7f3ee" opacity="0.6"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <text y="28" font-size="28">🪵</text>
 </svg>
