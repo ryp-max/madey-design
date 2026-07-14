@@ -433,5 +433,68 @@
       }
     });
   </script>
+
+  <script>
+    // Kinetic hero text — letters repel from cursor
+    (function() {
+      const h1 = document.querySelector('.hero-text h1');
+      if (!h1) return;
+
+      function wrapLetters(node) {
+        if (node.nodeType === 3) {
+          const frag = document.createDocumentFragment();
+          [...node.textContent].forEach(ch => {
+            if (ch.trim() === '') {
+              frag.appendChild(document.createTextNode(ch));
+            } else {
+              const s = document.createElement('span');
+              s.className = 'k-char';
+              s.textContent = ch;
+              frag.appendChild(s);
+            }
+          });
+          node.parentNode.replaceChild(frag, node);
+        } else if (node.nodeType === 1) {
+          [...node.childNodes].forEach(wrapLetters);
+        }
+      }
+
+      wrapLetters(h1);
+
+      const chars = [...h1.querySelectorAll('.k-char')];
+      chars.forEach(c => {
+        c.style.display = 'inline-block';
+        c.style.transition = 'transform 0.6s cubic-bezier(0.23, 1, 0.32, 1)';
+        c.style.willChange = 'transform';
+      });
+
+      const hero = document.querySelector('.hero');
+      let ticking = false;
+
+      hero.addEventListener('mousemove', e => {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(() => {
+          const mx = e.clientX, my = e.clientY;
+          chars.forEach(c => {
+            const r = c.getBoundingClientRect();
+            const cx = r.left + r.width / 2;
+            const cy = r.top + r.height / 2;
+            const dx = cx - mx, dy = cy - my;
+            const dist = Math.sqrt(dx * dx + dy * dy) || 1;
+            const strength = Math.max(0, 1 - dist / 140);
+            const tx = (dx / dist) * strength * 24;
+            const ty = (dy / dist) * strength * 24;
+            c.style.transform = `translate(${tx.toFixed(1)}px, ${ty.toFixed(1)}px)`;
+          });
+          ticking = false;
+        });
+      });
+
+      hero.addEventListener('mouseleave', () => {
+        chars.forEach(c => c.style.transform = '');
+      });
+    })();
+  </script>
 </body>
 </html>
