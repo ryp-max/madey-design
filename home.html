@@ -36,10 +36,15 @@
       backdrop-filter: blur(16px);
       border-bottom: 1px solid #ede8df;
     }
-    .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 300; letter-spacing: 0.06em; }
+    .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 300; letter-spacing: 0.06em; color: #fdfaf7; transition: color 250ms; }
+    .nav.solid .nav-logo { color: var(--ink); }
     .nav-links { list-style: none; display: flex; gap: 32px; }
-    .nav-links a { font-size: 12px; letter-spacing: 0.1em; opacity: 0.65; transition: opacity 200ms; }
-    .nav-links a:hover { opacity: 1; }
+    .nav-links a { font-size: 12px; letter-spacing: 0.1em; color: rgba(253,250,247,0.75); transition: opacity 200ms, color 250ms; }
+    .nav-links a:hover { color: #fdfaf7; opacity: 1; }
+    .nav.solid .nav-links a { color: var(--ink); opacity: 0.65; }
+    .nav.solid .nav-links a:hover { opacity: 1; }
+    .nav-hamburger span { background: #fdfaf7; transition: background 250ms; }
+    .nav.solid .nav-hamburger span { background: var(--ink); }
     .nav-hamburger { display: none; flex-direction: column; gap: 6px; background: none; border: none; cursor: pointer; }
     .nav-hamburger span { display: block; width: 20px; height: 1px; background: var(--ink); }
 
@@ -59,7 +64,7 @@
     .hero img { position: absolute; inset: 0; object-position: center 20%; }
     .hero::after {
       content: ''; position: absolute; inset: 0;
-      background: linear-gradient(to bottom, rgba(30,22,15,0.08) 0%, rgba(30,22,15,0) 40%, rgba(30,22,15,0.6) 100%);
+      background: linear-gradient(to bottom, rgba(30,22,15,0.45) 0%, rgba(30,22,15,0) 30%, rgba(30,22,15,0) 50%, rgba(30,22,15,0.6) 100%);
     }
     .hero-text {
       position: absolute; bottom: 52px; left: 48px; z-index: 2;
