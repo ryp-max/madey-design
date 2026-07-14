@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shop — Madey Design</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Inter:wght@300;400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --cream: #f7f3ee;
+      --bark:  #7a5c3e;
+      --wood:  #4a2e14;
+      --ink:   #1e160f;
+      --warm:  #c9b99a;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--cream); color: var(--ink); font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+
+    /* NAV */
+    .nav {
+      position: sticky; top: 0; z-index: 50;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 22px 40px;
+      background: rgba(247,243,238,0.95);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid #ede8df;
+    }
+    .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 300; letter-spacing: 0.06em; }
+    .nav-links { list-style: none; display: flex; gap: 32px; }
+    .nav-links a { font-size: 12px; letter-spacing: 0.1em; opacity: 0.55; transition: opacity 200ms; }
+    .nav-links a:hover, .nav-links a.active { opacity: 1; }
+    .nav-hamburger { display: none; flex-direction: column; gap: 6px; background: none; border: none; cursor: pointer; }
+    .nav-hamburger span { display: block; width: 20px; height: 1px; background: var(--ink); }
+
+    /* MOBILE MENU */
+    .mobile-menu { position: fixed; inset: 0; z-index: 200; background: var(--cream); display: flex; flex-direction: column; align-items: center; justify-content: center; }
+    .mobile-menu[hidden] { display: none; }
+    .mobile-menu ul { list-style: none; text-align: center; }
+    .mobile-menu li { margin: 20px 0; }
+    .mobile-menu a { font-family: 'Cormorant Garamond', serif; font-size: 2.2rem; font-weight: 300; }
+    .mobile-menu-close { position: absolute; top: 24px; right: 28px; background: none; border: none; font-size: 18px; cursor: pointer; opacity: 0.5; }
+
+    /* PAGE HEADER */
+    .page-header {
+      padding: 56px 40px 40px;
+      display: flex; align-items: baseline; justify-content: space-between; gap: 16px;
+      border-bottom: 1px solid #ede8df;
+    }
+    .page-header h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 4vw, 3rem); font-weight: 300; }
+    .page-header h1 em { font-style: italic; }
+    .page-header p { font-size: 12px; letter-spacing: 0.1em; color: var(--bark); }
+
+    /* SHOP GRID */
+    .shop { padding: 32px 40px 80px; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px 24px;
+    }
+
+    .product { display: flex; flex-direction: column; gap: 14px; cursor: pointer; }
+    .product-img {
+      aspect-ratio: 1/1;
+      overflow: hidden;
+      background: #ede8df;
+    }
+    .product-img img {
+      display: block; width: 100%; height: 100%;
+      object-fit: cover; object-position: center;
+      transition: transform 700ms ease;
+    }
+    .product:hover .product-img img { transform: scale(1.04); }
+
+    /* white balance fix for cool studio shots */
+    .wb-cool img {
+      filter: sepia(0.06) saturate(1.1) hue-rotate(-6deg) brightness(1.02);
+    }
+
+    .product-info { display: flex; flex-direction: column; gap: 5px; }
+    .product-name { font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; font-weight: 300; }
+    .product-meta { display: flex; align-items: center; justify-content: space-between; }
+    .product-price { font-size: 12px; color: var(--bark); letter-spacing: 0.06em; }
+    .product-cta { font-size: 11px; letter-spacing: 0.1em; border-bottom: 1px solid var(--warm); padding-bottom: 1px; opacity: 0; transition: opacity 200ms; }
+    .product:hover .product-cta { opacity: 1; }
+
+    /* FOOTER */
+    .footer { background: var(--ink); color: rgba(253,250,247,0.5); padding: 28px 40px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+    .footer .logo { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; color: #fdfaf7; font-weight: 300; letter-spacing: 0.06em; }
+    .footer p { font-size: 11px; }
+    .footer a { font-size: 11px; letter-spacing: 0.08em; transition: color 200ms; }
+    .footer a:hover { color: #fdfaf7; }
+
+    @media (max-width: 768px) {
+      .nav { padding: 18px 20px; }
+      .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
+      .page-header { padding: 40px 20px 28px; flex-direction: column; gap: 6px; }
+      .shop { padding: 24px 20px 60px; }
+      .grid { grid-template-columns: repeat(2, 1fr); gap: 24px 16px; }
+      .footer { padding: 24px 20px; flex-direction: column; text-align: center; gap: 8px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <a href="/home" class="nav-logo">madey</a>
+    <ul class="nav-links">
+      <li><a href="/shop" class="active">shop</a></li>
+      <li><a href="/home#contact">about</a></li>
+      <li><a href="/home#contact">contact</a></li>
+      <li><a href="https://www.instagram.com/madeydesign" target="_blank" rel="noopener">instagram ↗</a></li>
+    </ul>
+    <button class="nav-hamburger" aria-label="Menu"><span></span><span></span></button>
+  </nav>
+
+  <div class="mobile-menu" id="mobileMenu" hidden>
+    <button class="mobile-menu-close" id="mobileClose">✕</button>
+    <ul>
+      <li><a href="/shop">shop</a></li>
+      <li><a href="/home#contact">about</a></li>
+      <li><a href="/home#contact">contact</a></li>
+      <li><a href="https://www.instagram.com/madeydesign" target="_blank" rel="noopener">instagram ↗</a></li>
+    </ul>
+  </div>
+
+  <div class="page-header">
+    <h1>The <em>collection</em></h1>
+    <p>all handcrafted · inquire to order</p>
+  </div>
+
+  <section class="shop">
+    <div class="grid">
+
+      <a href="/home#contact" class="product">
+        <div class="product-img">
+          <img src="/images/product-bowl.jpg" alt="Maple & Walnut Bowl" />
+        </div>
+        <div class="product-info">
+          <span class="product-name">Maple &amp; Walnut Bowl</span>
+          <div class="product-meta">
+            <span class="product-price">from $165</span>
+            <span class="product-cta">inquire →</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="/home#contact" class="product wb-cool">
+        <div class="product-img">
+          <img src="/images/product-bubble-bowl.jpg" alt="Bubble Bowl" />
+        </div>
+        <div class="product-info">
+          <span class="product-name">Bubble Bowl</span>
+          <div class="product-meta">
+            <span class="product-price">from $180</span>
+            <span class="product-cta">inquire →</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="/home#contact" class="product wb-cool">
+        <div class="product-img">
+          <img src="/images/product-bubble-stack.jpg" alt="Bubble Bowl — Stacked" />
+        </div>
+        <div class="product-info">
+          <span class="product-name">Bubble Bowl — Stacked</span>
+          <div class="product-meta">
+            <span class="product-price">made to order</span>
+            <span class="product-cta">inquire →</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="/home#contact" class="product wb-cool">
+        <div class="product-img">
+          <img src="/images/product-paddle-board.jpg" alt="Paddle Board" />
+        </div>
+        <div class="product-info">
+          <span class="product-name">Paddle Board</span>
+          <div class="product-meta">
+            <span class="product-price">from $120</span>
+            <span class="product-cta">inquire →</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="/home#contact" class="product wb-cool">
+        <div class="product-img">
+          <img src="/images/product-wave-board.jpg" alt="Wave Board" />
+        </div>
+        <div class="product-info">
+          <span class="product-name">Wave Board</span>
+          <div class="product-meta">
+            <span class="product-price">from $95</span>
+            <span class="product-cta">inquire →</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="/home#contact" class="product">
+        <div class="product-img">
+          <img src="/images/product-totem.jpg" alt="Stacked Side Table" />
+        </div>
+        <div class="product-info">
+          <span class="product-name">Stacked Side Table</span>
+          <div class="product-meta">
+            <span class="product-price">from $220</span>
+            <span class="product-cta">inquire →</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="/home#contact" class="product">
+        <div class="product-img">
+          <img src="/images/product-bud-vase.jpg" alt="Candle Holders" />
+        </div>
+        <div class="product-info">
+          <span class="product-name">Candle Holders</span>
+          <div class="product-meta">
+            <span class="product-price">from $45</span>
+            <span class="product-cta">inquire →</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="/home#contact" class="product">
+        <div class="product-img">
+          <img src="/images/bud-vases-collection.jpg" alt="Bud Vases" />
+        </div>
+        <div class="product-info">
+          <span class="product-name">Bud Vases</span>
+          <div class="product-meta">
+            <span class="product-price">from $85</span>
+            <span class="product-cta">inquire →</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="/home#contact" class="product">
+        <div class="product-img" style="background: #e8e2da; display:flex; align-items:center; justify-content:center;">
+          <div style="text-align:center; padding: 32px;">
+            <p style="font-family:'Cormorant Garamond',serif; font-size:1.4rem; font-weight:300; line-height:1.4; color:var(--ink);">Something<br/><em>custom?</em></p>
+            <p style="font-size:11px; letter-spacing:0.1em; color:var(--bark); margin-top:12px;">get in touch →</p>
+          </div>
+        </div>
+        <div class="product-info">
+          <span class="product-name">Custom Order</span>
+          <div class="product-meta">
+            <span class="product-price">let's talk</span>
+            <span class="product-cta">inquire →</span>
+          </div>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <footer class="footer">
+    <span class="logo">madey</span>
+    <p>© 2025 Madey Design</p>
+    <a href="https://www.instagram.com/madeydesign" target="_blank" rel="noopener">@madeydesign</a>
+  </footer>
+
+  <script>
+    const hamburger = document.querySelector('.nav-hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    document.getElementById('mobileClose').addEventListener('click', () => mobileMenu.hidden = true);
+    hamburger.addEventListener('click', () => mobileMenu.hidden = false);
+    mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobileMenu.hidden = true));
+  </script>
+</body>
+</html>
