@@ -8,72 +8,268 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Inter:wght@300;400&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/style.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #f7f3ee;
+      --bark:  #7a5c3e;
+      --wood:  #4a2e14;
+      --ink:   #1e160f;
+      --warm:  #c9b99a;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { background: var(--cream); color: var(--ink); font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+    img  { display: block; width: 100%; height: 100%; object-fit: cover; }
+    a    { color: inherit; text-decoration: none; }
+
+    /* NAV */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 22px 40px;
+      transition: background 250ms ease, backdrop-filter 250ms ease;
+    }
+    .nav.solid {
+      background: rgba(247,243,238,0.92);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid #ede8df;
+    }
+    .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 300; letter-spacing: 0.06em; }
+    .nav-links { list-style: none; display: flex; gap: 32px; }
+    .nav-links a { font-size: 12px; letter-spacing: 0.1em; opacity: 0.65; transition: opacity 200ms; }
+    .nav-links a:hover { opacity: 1; }
+    .nav-hamburger { display: none; flex-direction: column; gap: 6px; background: none; border: none; cursor: pointer; }
+    .nav-hamburger span { display: block; width: 20px; height: 1px; background: var(--ink); }
+
+    /* MOBILE MENU */
+    .mobile-menu { position: fixed; inset: 0; z-index: 200; background: var(--cream); display: flex; flex-direction: column; align-items: center; justify-content: center; }
+    .mobile-menu[hidden] { display: none; }
+    .mobile-menu ul { list-style: none; text-align: center; }
+    .mobile-menu li { margin: 20px 0; }
+    .mobile-menu a { font-family: 'Cormorant Garamond', serif; font-size: 2.2rem; font-weight: 300; }
+    .mobile-menu-close { position: absolute; top: 24px; right: 28px; background: none; border: none; font-size: 18px; cursor: pointer; opacity: 0.5; }
+
+    /* HERO — full bleed */
+    .hero {
+      height: 100svh; min-height: 600px;
+      position: relative; overflow: hidden;
+    }
+    .hero img { position: absolute; inset: 0; object-position: center 20%; }
+    .hero::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(to bottom, rgba(30,22,15,0.08) 0%, rgba(30,22,15,0) 40%, rgba(30,22,15,0.6) 100%);
+    }
+    .hero-text {
+      position: absolute; bottom: 52px; left: 48px; z-index: 2;
+      color: #fdfaf7;
+    }
+    .hero-text h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3.2rem, 7vw, 5.5rem);
+      font-weight: 300; line-height: 1.08;
+      margin-bottom: 24px;
+    }
+    .hero-text h1 em { font-style: italic; }
+    .hero-text a { font-size: 12px; letter-spacing: 0.12em; color: rgba(253,250,247,0.65); transition: color 200ms; }
+    .hero-text a:hover { color: #fdfaf7; }
+    .eyebrow { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 14px; opacity: 0.6; }
+
+    /* FULL-BLEED FEATURE */
+    .feature {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 90vh;
+    }
+    .feature-img { position: relative; overflow: hidden; }
+    .feature-img img { transition: transform 600ms ease; }
+    .feature:hover .feature-img img { transform: scale(1.03); }
+
+    .feature-text {
+      display: flex; flex-direction: column; justify-content: center;
+      padding: clamp(40px, 8vw, 100px) clamp(32px, 5vw, 80px);
+      background: var(--cream);
+      gap: 20px;
+    }
+    .feature-text.dark { background: var(--ink); color: #fdfaf7; }
+    .feature-text.dark .label { color: #c9b99a; }
+    .feature-text.dark p { opacity: 0.65; }
+    .feature-text.dark .price { color: #c9b99a; }
+
+    .label { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--bark); }
+    .feature-text h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 300; line-height: 1.15; }
+    .feature-text h2 em { font-style: italic; }
+    .feature-text p { font-size: 14px; line-height: 1.8; opacity: 0.75; max-width: 400px; }
+    .price { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; color: var(--bark); }
+    .inquire-link {
+      display: inline-block; align-self: flex-start;
+      font-size: 12px; letter-spacing: 0.1em;
+      border-bottom: 1px solid var(--warm); padding-bottom: 3px;
+      transition: border-color 200ms;
+    }
+    .inquire-link:hover { border-color: var(--ink); }
+    .feature-text.dark .inquire-link { border-color: #c9b99a; }
+    .feature-text.dark .inquire-link:hover { border-color: #fdfaf7; }
+
+    /* flip on alternating */
+    .feature.flip { direction: rtl; }
+    .feature.flip > * { direction: ltr; }
+
+    /* FULL-WIDTH BAND */
+    .band {
+      height: 70vh; min-height: 400px;
+      position: relative; overflow: hidden;
+    }
+    .band img { object-position: center 40%; }
+    .band::after {
+      content: ''; position: absolute; inset: 0;
+      background: rgba(30,22,15,0.35);
+    }
+    .band-text {
+      position: absolute; inset: 0; z-index: 2;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      color: #fdfaf7; text-align: center; gap: 16px;
+    }
+    .band-text h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 5vw, 4rem); font-weight: 300; }
+    .band-text h2 em { font-style: italic; }
+    .band-text p { font-size: 14px; opacity: 0.7; max-width: 380px; line-height: 1.7; }
+    .band-btn {
+      display: inline-block; margin-top: 8px;
+      padding: 12px 32px; border: 1px solid rgba(253,250,247,0.5);
+      font-size: 12px; letter-spacing: 0.1em; color: #fdfaf7;
+      transition: background 200ms, border-color 200ms;
+    }
+    .band-btn:hover { background: rgba(253,250,247,0.12); border-color: #fdfaf7; }
+
+    /* CONTACT */
+    .contact { padding: 96px 40px; background: #fdfaf7; }
+    .contact-inner { max-width: 960px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+    .contact-left { display: flex; flex-direction: column; gap: 18px; }
+    .contact-left h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 3vw, 2.6rem); font-weight: 300; line-height: 1.2; }
+    .contact-left h2 em { font-style: italic; }
+    .contact-left p { font-size: 14px; line-height: 1.75; opacity: 0.75; }
+    .reply-note { font-size: 12px; opacity: 0.45 !important; letter-spacing: 0.06em; }
+    .contact-form { display: flex; flex-direction: column; gap: 12px; }
+    .field input, .field select, .field textarea {
+      width: 100%; background: transparent; border: none;
+      border-bottom: 1px solid var(--warm); padding: 12px 0;
+      font-family: 'Inter', sans-serif; font-size: 14px; color: var(--ink);
+      outline: none; transition: border-color 200ms;
+      -webkit-appearance: none; appearance: none; border-radius: 0;
+    }
+    .field input::placeholder, .field textarea::placeholder { color: var(--warm); }
+    .field select { color: var(--warm); cursor: pointer; }
+    .field select:valid { color: var(--ink); }
+    .field input:focus, .field select:focus, .field textarea:focus { border-color: var(--ink); }
+    .field textarea { resize: none; min-height: 100px; }
+    .submit-btn {
+      align-self: flex-start; margin-top: 12px;
+      background: none; border: none;
+      font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 300;
+      color: var(--ink); cursor: pointer; letter-spacing: 0.04em;
+      border-bottom: 1px solid var(--ink); padding-bottom: 2px;
+      transition: opacity 200ms;
+    }
+    .submit-btn:hover { opacity: 0.6; }
+    .form-success { display: flex; flex-direction: column; gap: 8px; }
+    .form-success[hidden] { display: none; }
+    .form-success p { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 300; line-height: 1.3; }
+    .order-confirm { font-family: 'Inter', sans-serif !important; font-size: 11px !important; letter-spacing: 0.12em; color: var(--bark); }
+
+    /* FOOTER */
+    .footer { background: var(--ink); color: rgba(253,250,247,0.5); padding: 28px 40px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+    .footer .nav-logo { color: #fdfaf7; font-size: 1.2rem; }
+    .footer p { font-size: 11px; }
+    .footer a { font-size: 11px; letter-spacing: 0.08em; transition: color 200ms; }
+    .footer a:hover { color: #fdfaf7; }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .nav { padding: 18px 20px; }
+      .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
+      .hero-text { left: 24px; bottom: 40px; }
+      .feature { grid-template-columns: 1fr; min-height: auto; }
+      .feature-img { aspect-ratio: 4/3; }
+      .feature.flip { direction: ltr; }
+      .contact { padding: 64px 20px; }
+      .contact-inner { grid-template-columns: 1fr; gap: 40px; }
+      .footer { padding: 24px 20px; flex-direction: column; text-align: center; gap: 8px; }
+    }
+  </style>
 </head>
 <body>
 
-  <!-- NAV -->
   <nav class="nav" id="nav">
     <a href="#" class="nav-logo">madey</a>
     <ul class="nav-links">
-      <li><a href="#shop">shop</a></li>
-      <li><a href="#about">about</a></li>
+      <li><a href="#contact">shop</a></li>
+      <li><a href="#contact">about</a></li>
       <li><a href="#contact">contact</a></li>
       <li><a href="https://www.instagram.com/madeydesign" target="_blank" rel="noopener">instagram ↗</a></li>
     </ul>
-    <button class="nav-hamburger" aria-label="Menu">
-      <span></span><span></span>
-    </button>
+    <button class="nav-hamburger" aria-label="Menu"><span></span><span></span></button>
   </nav>
 
-  <!-- MOBILE MENU -->
   <div class="mobile-menu" id="mobileMenu" hidden>
     <button class="mobile-menu-close" id="mobileClose">✕</button>
     <ul>
-      <li><a href="#shop">shop</a></li>
-      <li><a href="#about">about</a></li>
+      <li><a href="#contact">shop</a></li>
+      <li><a href="#contact">about</a></li>
       <li><a href="#contact">contact</a></li>
       <li><a href="https://www.instagram.com/madeydesign" target="_blank" rel="noopener">instagram ↗</a></li>
     </ul>
   </div>
 
-  <!-- HERO -->
+  <!-- HERO — organic board, full bleed -->
   <section class="hero">
-    <div class="hero-img-wrap img-wrap">
-      <img src="/images/hero.jpg" alt="" aria-hidden="true"
-           onerror="this.closest('.hero-img-wrap').classList.add('no-img')" />
-    </div>
-    <div class="hero-caption">
-      <p>handcrafted in small batches</p>
-    </div>
-    <div class="hero-title-block">
+    <img src="/images/hero.jpg" alt="Madey Design — handcrafted woodwork" />
+    <div class="hero-text">
+      <p class="eyebrow">handcrafted in small batches</p>
       <h1>Made by hand.<br/><em>Made to last.</em></h1>
-      <a href="#shop" class="scroll-cue">↓ the collection</a>
+      <a href="#contact">↓ inquire</a>
     </div>
   </section>
 
-  <!-- SHOP -->
-  <section class="shop" id="shop">
-    <div class="shop-header">
-      <h2>the collection</h2>
+  <!-- FEATURE 1 — bowl -->
+  <section class="feature">
+    <div class="feature-img">
+      <img src="/images/product-bowl.jpg" alt="Maple & walnut bowl" />
     </div>
-    <div class="shop-grid" id="shopGrid"></div>
+    <div class="feature-text">
+      <span class="label">turned wood</span>
+      <h2>Maple &amp; Walnut<br/><em>Statement Bowl</em></h2>
+      <p class="price">from $165</p>
+      <p>Hand-turned from solid maple and walnut. The wavy inlay is carved, not glued — each one unrepeatable. Food-safe oil finish.</p>
+      <a href="#contact" class="inquire-link">inquire about this piece →</a>
+    </div>
   </section>
 
-  <!-- ABOUT -->
-  <section class="about" id="about">
-    <div class="about-img-wrap img-wrap">
-      <img src="/images/about.jpg" alt="The workshop"
-           onerror="this.closest('.about-img-wrap').classList.add('no-img')" />
+  <!-- FEATURE 2 — totem, dark bg -->
+  <section class="feature flip">
+    <div class="feature-img">
+      <img src="/images/product-totem.jpg" alt="Stacked wood totem sculpture" />
     </div>
-    <div class="about-text">
-      <span class="label">the story</span>
-      <h2>Slow work,<br/><em>real craft.</em></h2>
-      <p>Every piece starts with a conversation between the wood and the maker. No shortcuts, no templates — just careful hands and honest materials.</p>
-      <p>Madey Design is a small studio making functional objects that feel good to live with. Built to be used, worn in, and passed on.</p>
-      <a href="https://www.instagram.com/madeydesign" target="_blank" rel="noopener" class="text-link">follow the work on instagram ↗</a>
+    <div class="feature-text dark">
+      <span class="label">sculpture</span>
+      <h2>Stacked<br/><em>Totem</em></h2>
+      <p class="price">from $220</p>
+      <p>A hand-turned totem built from multiple wood species — each layer shaped separately, then assembled. No two are the same. Display or functional object, you decide.</p>
+      <a href="#contact" class="inquire-link">inquire about this piece →</a>
     </div>
   </section>
+
+  <!-- FULL-WIDTH BAND -->
+  <div class="band">
+    <img src="/images/hero.jpg" alt="" aria-hidden="true" style="object-position: center 55%;" />
+    <div class="band-text">
+      <h2>Custom orders<br/><em>welcome.</em></h2>
+      <p>Have something specific in mind? I take on a limited number of commissions each month.</p>
+      <a href="#contact" class="band-btn">get in touch</a>
+    </div>
+  </div>
 
   <!-- CONTACT -->
   <section class="contact" id="contact">
@@ -81,31 +277,24 @@
       <div class="contact-left">
         <span class="label">get in touch</span>
         <h2>Custom orders,<br/><em>questions, hellos.</em></h2>
-        <p>I take on a limited number of commissions each month. Reach out to check availability or discuss a piece.</p>
+        <p>Reach out to check availability or discuss a piece. I work with you from concept to finish.</p>
         <p class="reply-note">Typically reply within 1–2 days.</p>
       </div>
       <form class="contact-form" id="contactForm">
+        <div class="field"><input type="text" name="name" placeholder="name" required /></div>
+        <div class="field"><input type="email" name="email" placeholder="email" required /></div>
         <div class="field">
-          <input type="text" id="name" name="name" placeholder="name" required />
-        </div>
-        <div class="field">
-          <input type="email" id="email" name="email" placeholder="email" required />
-        </div>
-        <div class="field">
-          <select id="interest" name="interest">
+          <select name="interest">
             <option value="">what are you after?</option>
+            <option value="bowl">Maple &amp; Walnut Bowl</option>
+            <option value="totem">Stacked Totem</option>
             <option value="cutting-board">Cutting Board</option>
-            <option value="serving-tray">Serving Tray</option>
-            <option value="end-grain-board">End-Grain Board</option>
             <option value="shelf">Floating Shelf</option>
-            <option value="bowl">Turned Bowl</option>
             <option value="custom">Custom Order</option>
             <option value="other">Just saying hi</option>
           </select>
         </div>
-        <div class="field">
-          <textarea id="message" name="message" rows="4" placeholder="tell me more..." required></textarea>
-        </div>
+        <div class="field"><textarea name="message" rows="4" placeholder="tell me more..." required></textarea></div>
         <button type="submit" class="submit-btn">send →</button>
       </form>
       <div class="form-success" id="formSuccess" hidden>
@@ -115,31 +304,47 @@
     </div>
   </section>
 
-  <!-- FOOTER -->
   <footer class="footer">
     <span class="nav-logo">madey</span>
     <p>© 2025 Madey Design</p>
     <a href="https://www.instagram.com/madeydesign" target="_blank" rel="noopener">@madeydesign</a>
   </footer>
 
-  <!-- LIGHTBOX -->
-  <div class="lightbox" id="lightbox" hidden>
-    <button class="lb-close" id="lbClose">✕</button>
-    <button class="lb-prev" id="lbPrev">←</button>
-    <button class="lb-next" id="lbNext">→</button>
-    <div class="lb-img-wrap img-wrap">
-      <img id="lbImg" src="" alt="" />
-    </div>
-    <div class="lb-info">
-      <p class="lb-name" id="lbName"></p>
-      <p class="lb-price" id="lbPrice"></p>
-      <p class="lb-desc" id="lbDesc"></p>
-      <p class="lb-dims" id="lbDims"></p>
-      <a href="#contact" class="lb-cta" id="lbCta">inquire →</a>
-    </div>
-  </div>
+  <script>
+    // Nav scroll
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => nav.classList.toggle('solid', window.scrollY > 60), { passive: true });
 
-  <script src="/products.js"></script>
-  <script src="/app.js"></script>
+    // Mobile menu
+    const hamburger = document.querySelector('.nav-hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    document.getElementById('mobileClose').addEventListener('click', () => mobileMenu.hidden = true);
+    hamburger.addEventListener('click', () => mobileMenu.hidden = false);
+    mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobileMenu.hidden = true));
+
+    // Contact form
+    const form = document.getElementById('contactForm');
+    const formSuccess = document.getElementById('formSuccess');
+    form.addEventListener('submit', async e => {
+      e.preventDefault();
+      const btn = form.querySelector('.submit-btn');
+      btn.textContent = 'sending...'; btn.disabled = true;
+      const data = Object.fromEntries(new FormData(form));
+      try {
+        const res = await fetch('/api/contact', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
+        if (res.ok) {
+          const { orderNumber } = await res.json();
+          form.hidden = true; formSuccess.hidden = false;
+          const c = document.getElementById('orderConfirm');
+          if (c && orderNumber) c.textContent = `Inquiry #${orderNumber} — check your email for confirmation.`;
+        } else throw new Error();
+      } catch {
+        const s = encodeURIComponent(`Madey Design — ${data.interest || 'Inquiry'}`);
+        const b = encodeURIComponent(`Name: ${data.name}\nEmail: ${data.email}\n\n${data.message}`);
+        window.location.href = `mailto:hello@madey.com?subject=${s}&body=${b}`;
+        btn.textContent = 'send →'; btn.disabled = false;
+      }
+    });
+  </script>
 </body>
 </html>
