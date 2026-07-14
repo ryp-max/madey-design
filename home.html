@@ -185,6 +185,43 @@
     .footer a { font-size: 11px; letter-spacing: 0.08em; transition: color 200ms; }
     .footer a:hover { color: #fdfaf7; }
 
+    /* SHOP GRID */
+    .shop-grid { padding: 6px; background: var(--cream); }
+    .shop-grid-header { padding: 48px 40px 24px; display: flex; align-items: baseline; justify-content: space-between; }
+    .shop-grid-header h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.6rem, 2.5vw, 2.2rem); font-weight: 300; }
+    .shop-grid-header h2 em { font-style: italic; }
+    .shop-grid-header span { font-size: 11px; letter-spacing: 0.12em; color: var(--bark); }
+    .shop-grid-inner {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 6px;
+    }
+    .gi { overflow: hidden; position: relative; cursor: pointer; }
+    .gi img { width: 100%; height: 100%; object-fit: cover; object-position: center; transition: transform 700ms ease; }
+    .gi:hover img { transform: scale(1.04); }
+    .gi-label {
+      position: absolute; bottom: 16px; left: 16px; z-index: 2;
+      background: rgba(247,243,238,0.88); backdrop-filter: blur(8px);
+      padding: 6px 12px;
+      font-size: 11px; letter-spacing: 0.1em; color: var(--ink);
+      opacity: 0; transform: translateY(4px);
+      transition: opacity 200ms, transform 200ms;
+    }
+    .gi:hover .gi-label { opacity: 1; transform: translateY(0); }
+
+    /* grid placements */
+    .gi-1 { grid-column: 1/8; aspect-ratio: 4/3; }
+    .gi-2 { grid-column: 8/13; aspect-ratio: 3/4; }
+    .gi-3 { grid-column: 1/5; aspect-ratio: 1/1; }
+    .gi-4 { grid-column: 5/9; aspect-ratio: 1/1; }
+    .gi-5 { grid-column: 9/13; aspect-ratio: 1/1; }
+    .gi-6 { grid-column: 1/13; aspect-ratio: 16/5; }
+
+    /* white balance: warm up the cool blue-gray studio shots */
+    .gi-2 img, .gi-3 img, .gi-4 img, .gi-6 img {
+      filter: sepia(0.06) saturate(1.1) hue-rotate(-6deg) brightness(1.02);
+    }
+
     /* RESPONSIVE */
     @media (max-width: 768px) {
       .nav { padding: 18px 20px; }
@@ -197,6 +234,13 @@
       .contact { padding: 64px 20px; }
       .contact-inner { grid-template-columns: 1fr; gap: 40px; }
       .footer { padding: 24px 20px; flex-direction: column; text-align: center; gap: 8px; }
+      .shop-grid-header { padding: 40px 20px 16px; }
+      .gi-1 { grid-column: 1/13; aspect-ratio: 4/3; }
+      .gi-2 { grid-column: 1/7; aspect-ratio: 3/4; }
+      .gi-3 { grid-column: 7/13; aspect-ratio: 3/4; }
+      .gi-4 { grid-column: 1/7; aspect-ratio: 1/1; }
+      .gi-5 { grid-column: 7/13; aspect-ratio: 1/1; }
+      .gi-6 { grid-column: 1/13; aspect-ratio: 4/3; }
     }
   </style>
 </head>
@@ -261,6 +305,40 @@
     </div>
   </section>
 
+  <!-- SHOP GRID -->
+  <section class="shop-grid" id="shop">
+    <div class="shop-grid-header">
+      <h2>The <em>collection</em></h2>
+      <span>all handcrafted · inquire to order</span>
+    </div>
+    <div class="shop-grid-inner">
+      <a href="#contact" class="gi gi-1">
+        <img src="/images/bud-vases-collection.jpg" alt="Turned wood vase collection" />
+        <span class="gi-label">Bud Vases — from $85</span>
+      </a>
+      <a href="#contact" class="gi gi-2">
+        <img src="/images/product-paddle-board.jpg" alt="Walnut paddle board" />
+        <span class="gi-label">Paddle Board — from $120</span>
+      </a>
+      <a href="#contact" class="gi gi-3">
+        <img src="/images/product-bubble-bowl.jpg" alt="Bubble bowl walnut maple" />
+        <span class="gi-label">Bubble Bowl — from $180</span>
+      </a>
+      <a href="#contact" class="gi gi-4">
+        <img src="/images/product-wave-board.jpg" alt="Wave board walnut maple" />
+        <span class="gi-label">Wave Board — from $95</span>
+      </a>
+      <a href="#contact" class="gi gi-5">
+        <img src="/images/product-bud-vase.jpg" alt="Turned candle holders" />
+        <span class="gi-label">Candle Holders — from $45</span>
+      </a>
+      <a href="#contact" class="gi gi-6">
+        <img src="/images/product-bubble-stack.jpg" alt="Stacked bubble bowls" />
+        <span class="gi-label">Bubble Bowl — made to order</span>
+      </a>
+    </div>
+  </section>
+
   <!-- FULL-WIDTH BAND -->
   <div class="band">
     <img src="/images/hero.jpg" alt="" aria-hidden="true" style="object-position: center 55%;" />
@@ -287,9 +365,12 @@
           <select name="interest">
             <option value="">what are you after?</option>
             <option value="bowl">Maple &amp; Walnut Bowl</option>
+            <option value="bubble-bowl">Bubble Bowl</option>
             <option value="side-table">Stacked Side Table</option>
-            <option value="cutting-board">Cutting Board</option>
-            <option value="shelf">Floating Shelf</option>
+            <option value="paddle-board">Paddle Board</option>
+            <option value="wave-board">Wave Board</option>
+            <option value="bud-vase">Bud Vase</option>
+            <option value="candle-holder">Candle Holders</option>
             <option value="custom">Custom Order</option>
             <option value="other">Just saying hi</option>
           </select>
