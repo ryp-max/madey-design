@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About — Madey Design</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Inter:wght@300;400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --cream: #f7f3ee;
+      --parchment: #ede8df;
+      --bark: #7a5c3e;
+      --wood: #4a2e14;
+      --ink: #1e160f;
+      --warm: #c9b99a;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--cream); color: var(--ink); font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+
+    /* NAV */
+    .nav {
+      position: sticky; top: 0; z-index: 50;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 22px 40px;
+      background: rgba(247,243,238,0.95);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid #ede8df;
+    }
+    .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 300; letter-spacing: 0.06em; }
+    .nav-links { list-style: none; display: flex; gap: 32px; }
+    .nav-links a { font-size: 12px; letter-spacing: 0.1em; opacity: 0.55; transition: opacity 200ms; }
+    .nav-links a:hover, .nav-links a.active { opacity: 1; }
+    .nav-hamburger { display: none; flex-direction: column; gap: 6px; background: none; border: none; cursor: pointer; }
+    .nav-hamburger span { display: block; width: 20px; height: 1px; background: var(--ink); }
+
+    /* MOBILE MENU */
+    .mobile-menu { position: fixed; inset: 0; z-index: 200; background: var(--cream); display: flex; flex-direction: column; align-items: center; justify-content: center; }
+    .mobile-menu[hidden] { display: none; }
+    .mobile-menu ul { list-style: none; text-align: center; }
+    .mobile-menu li { margin: 20px 0; }
+    .mobile-menu a { font-family: 'Cormorant Garamond', serif; font-size: 2.2rem; font-weight: 300; }
+    .mobile-menu-close { position: absolute; top: 24px; right: 28px; background: none; border: none; font-size: 18px; cursor: pointer; opacity: 0.5; }
+
+    /* HERO */
+    .about-hero {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 90vh;
+    }
+    .about-hero-img {
+      overflow: hidden;
+      background: #f0ece6;
+    }
+    .about-hero-img img {
+      display: block; width: 100%; height: 100%;
+      object-fit: cover; object-position: center top;
+    }
+    .about-hero-text {
+      display: flex; flex-direction: column; justify-content: flex-end;
+      padding: clamp(40px, 8vw, 96px) clamp(32px, 5vw, 72px);
+      background: var(--parchment);
+      gap: 28px;
+    }
+    .about-eyebrow { font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--bark); }
+    .about-hero-text h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.4rem, 4vw, 3.8rem);
+      font-weight: 300; line-height: 1.1;
+    }
+    .about-hero-text h1 em { font-style: italic; }
+    .name-note {
+      font-size: 12px; letter-spacing: 0.06em; color: var(--bark);
+      border-left: 2px solid var(--warm); padding-left: 12px;
+      line-height: 1.6;
+    }
+
+    /* BODY TEXT */
+    .about-body {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 80px 40px 96px;
+      display: flex; flex-direction: column; gap: 28px;
+    }
+    .about-body p {
+      font-size: 16px;
+      line-height: 1.85;
+      color: var(--ink);
+      opacity: 0.85;
+    }
+    .about-body p:first-child { font-size: 18px; opacity: 1; }
+
+    /* CTA */
+    .about-cta {
+      display: flex; align-items: center; gap: 32px;
+      padding-top: 12px;
+    }
+    .cta-link {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem; font-weight: 300;
+      border-bottom: 1px solid var(--ink); padding-bottom: 2px;
+      transition: opacity 200ms;
+    }
+    .cta-link:hover { opacity: 0.5; }
+    .cta-subtle {
+      font-size: 12px; letter-spacing: 0.08em; color: var(--bark);
+      transition: opacity 200ms;
+    }
+    .cta-subtle:hover { opacity: 0.6; }
+
+    /* FOOTER */
+    .footer { background: var(--ink); color: rgba(253,250,247,0.5); padding: 28px 40px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+    .footer .logo { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; color: #fdfaf7; font-weight: 300; letter-spacing: 0.06em; }
+    .footer p { font-size: 11px; }
+    .footer a { font-size: 11px; letter-spacing: 0.08em; transition: color 200ms; }
+    .footer a:hover { color: #fdfaf7; }
+
+    @media (max-width: 768px) {
+      .nav { padding: 18px 20px; }
+      .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
+      .about-hero { grid-template-columns: 1fr; min-height: auto; }
+      .about-hero-img { aspect-ratio: 3/4; }
+      .about-hero-text { padding: 40px 24px 48px; }
+      .about-body { padding: 48px 24px 64px; }
+      .footer { padding: 24px 20px; flex-direction: column; text-align: center; gap: 8px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <a href="/" class="nav-logo">madey</a>
+    <ul class="nav-links">
+      <li><a href="/shop">shop</a></li>
+      <li><a href="/about" class="active">about</a></li>
+      <li><a href="/#contact">contact</a></li>
+      <li><a href="https://www.instagram.com/madeydesign" target="_blank" rel="noopener">instagram ↗</a></li>
+    </ul>
+    <button class="nav-hamburger" aria-label="Menu"><span></span><span></span></button>
+  </nav>
+
+  <div class="mobile-menu" id="mobileMenu" hidden>
+    <button class="mobile-menu-close" id="mobileClose">✕</button>
+    <ul>
+      <li><a href="/shop">shop</a></li>
+      <li><a href="/about">about</a></li>
+      <li><a href="/#contact">contact</a></li>
+      <li><a href="https://www.instagram.com/madeydesign" target="_blank" rel="noopener">instagram ↗</a></li>
+    </ul>
+  </div>
+
+  <section class="about-hero">
+    <div class="about-hero-img">
+      <img src="/images/profile.jpg" alt="Yedam Park — Madey Design" />
+    </div>
+    <div class="about-hero-text">
+      <span class="about-eyebrow">the maker</span>
+      <h1>Yedam Park.<br/><em>She goes by Madey.</em></h1>
+      <p class="name-note">madey is yedam, backwards — a small riddle built into the name.</p>
+    </div>
+  </section>
+
+  <div class="about-body">
+    <p>Yedam Park is the maker behind Madey Design. She works primarily in walnut and maple, turning each piece by hand on a lathe. Her work is shaped by a fascination with organic form — curves that feel inevitable, wood grain that tells its own story.</p>
+
+    <p>The pieces are functional but quietly sculptural. Cutting boards with hand-carved wavy inlays. Bubble bowls turned from alternating walnut and maple rings. Bud vases with silhouettes that look more like they grew than were made. Nothing is mass-produced. No two pieces are the same.</p>
+
+    <p>The name started as a small joke — <em>madey</em> is <em>yedam</em>, written backwards. It stuck because it felt honest: the work is personal, a little playful, and always made by her.</p>
+
+    <p>She takes a limited number of custom orders each month. If something catches your eye or you have something specific in mind, reach out directly.</p>
+
+    <div class="about-cta">
+      <a href="/#contact" class="cta-link">get in touch →</a>
+      <a href="https://www.instagram.com/madeydesign" target="_blank" rel="noopener" class="cta-subtle">@madeydesign ↗</a>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <span class="logo">madey</span>
+    <p>© 2025 Madey Design</p>
+    <a href="https://www.instagram.com/madeydesign" target="_blank" rel="noopener">@madeydesign</a>
+  </footer>
+
+  <script>
+    const hamburger = document.querySelector('.nav-hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    document.getElementById('mobileClose').addEventListener('click', () => mobileMenu.hidden = true);
+    hamburger.addEventListener('click', () => mobileMenu.hidden = false);
+    mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobileMenu.hidden = true));
+  </script>
+</body>
+</html>
