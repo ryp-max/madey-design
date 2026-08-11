@@ -3,14 +3,68 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Madey Design — Handcrafted Objects & Furniture</title>
-  <meta name="description" content="Handcrafted wood objects and furniture by Yedam Park. Turned bowls, boards, and one-of-a-kind pieces made in San Francisco." />
-  <meta property="og:title" content="Madey Design — Handcrafted Objects & Furniture" />
-  <meta property="og:description" content="Handcrafted wood objects and furniture by Yedam Park. Turned bowls, boards, and one-of-a-kind pieces made in San Francisco." />
+  <title>Madey Design — Handcrafted Wood Objects & Furniture by Yedam Park</title>
+  <meta name="description" content="Madey Design is the artist studio of Yedam Park — handcrafted wood objects and furniture made in San Francisco. Turned bowls, serving boards, bud vases, and one-of-a-kind sculptural pieces in walnut and maple." />
+  <meta name="keywords" content="Madey Design, Yedam Park, madeydesign, handcrafted wood, turned wood bowls, wood furniture San Francisco, wood artist San Francisco, walnut maple woodworking, custom wood objects" />
+  <link rel="canonical" href="https://madey.com/" />
+  <meta property="og:site_name" content="Madey Design" />
+  <meta property="og:title" content="Madey Design — Handcrafted Wood Objects & Furniture" />
+  <meta property="og:description" content="The artist studio of Yedam Park. Handcrafted wood objects and furniture made in San Francisco — turned bowls, boards, and sculptural pieces in walnut and maple." />
   <meta property="og:image" content="https://madey.com/images/hero.jpg" />
   <meta property="og:url" content="https://madey.com" />
   <meta property="og:type" content="website" />
   <meta name="twitter:card" content="summary_large_image" />
+  <meta name="google-site-verification" content="gGHhJaUmjQlSgq2lgRNkg2yp15pwCfVnLRDyfhUVqfY" />
+  <meta name="twitter:site" content="@madeydesign" />
+  <meta name="twitter:title" content="Madey Design — Handcrafted Wood Objects & Furniture" />
+  <meta name="twitter:description" content="The artist studio of Yedam Park. Handcrafted wood objects and furniture made in San Francisco." />
+  <meta name="twitter:image" content="https://madey.com/images/hero.jpg" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "LocalBusiness",
+        "@id": "https://madey.com/#business",
+        "name": "Madey Design",
+        "alternateName": "madeydesign",
+        "url": "https://madey.com",
+        "logo": "https://madey.com/favicon.svg",
+        "image": "https://madey.com/images/hero.jpg",
+        "description": "Handcrafted wood objects and furniture made in San Francisco by artist Yedam Park.",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "San Francisco",
+          "addressRegion": "CA",
+          "addressCountry": "US"
+        },
+        "sameAs": [
+          "https://www.instagram.com/madeydesign",
+          "https://substack.com/@madeydesign"
+        ]
+      },
+      {
+        "@type": "Person",
+        "@id": "https://madey.com/#yedam",
+        "name": "Yedam Park",
+        "alternateName": ["Rachel Yedam Park", "Rachel Park", "Madey"],
+        "url": "https://madey.com/about",
+        "jobTitle": "Artist, Woodworker",
+        "worksFor": { "@id": "https://madey.com/#business" },
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "San Francisco",
+          "addressRegion": "CA",
+          "addressCountry": "US"
+        },
+        "sameAs": [
+          "https://www.instagram.com/madeydesign",
+          "https://substack.com/@madeydesign"
+        ]
+      }
+    ]
+  }
+  </script>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -430,7 +484,7 @@
           const { orderNumber } = await res.json();
           form.hidden = true; formSuccess.hidden = false;
           const c = document.getElementById('orderConfirm');
-          if (c && orderNumber) c.textContent = `Inquiry #${orderNumber} — check your email for confirmation.`;
+          if (c) c.textContent = `Check your email for confirmation.`;
         } else throw new Error();
       } catch {
         const s = encodeURIComponent(`Madey Design — ${data.interest || 'Inquiry'}`);

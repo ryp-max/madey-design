@@ -4,6 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Product — Madey Design</title>
+  <meta name="description" content="Handcrafted wood object by Madey Design — Yedam Park, San Francisco." />
+  <meta property="og:site_name" content="Madey Design" />
+  <meta property="og:type" content="product" />
+  <meta name="twitter:card" content="summary_large_image" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -284,6 +288,12 @@
         category: 'Turned Wood',
         image: '/images/bud-vases-collection.jpg',
         description: 'A collection of small bud vases, each turned from scrap wood. No two share the same proportions. Meant to be grouped together or displayed alone.'
+      },
+      'checkered-plate': {
+        name: 'Checkered Plate',
+        category: 'Turned Wood',
+        image: '/images/checkered-plate.jpg',
+        description: 'A wide, low torus form turned from alternating walnut and maple segments. The checkerboard pattern emerges from the segmented construction — each piece cut, glued, and turned as one. Food-safe oil finish.'
       }
     };
 
@@ -297,8 +307,51 @@
         return;
       }
 
-      // Set page title
+      // Set page title and meta
       document.title = product.name + ' — Madey Design';
+      const absImage = 'https://madey.com' + product.image;
+      const absUrl = 'https://madey.com/product?id=' + id;
+      document.querySelector('meta[name="description"]').setAttribute('content', product.description + ' Handcrafted by Yedam Park in San Francisco.');
+      document.querySelector('meta[property="og:title"]') && document.querySelector('meta[property="og:title"]').setAttribute('content', product.name + ' — Madey Design');
+      document.querySelector('meta[property="og:description"]') && document.querySelector('meta[property="og:description"]').setAttribute('content', product.description);
+      document.querySelector('meta[property="og:image"]') && document.querySelector('meta[property="og:image"]').setAttribute('content', absImage);
+      document.querySelector('meta[property="og:url"]') && document.querySelector('meta[property="og:url"]').setAttribute('content', absUrl);
+
+      // Add OG tags if missing
+      function setMeta(prop, val, attr) {
+        attr = attr || 'property';
+        let el = document.querySelector('meta[' + attr + '="' + prop + '"]');
+        if (!el) { el = document.createElement('meta'); el.setAttribute(attr, prop); document.head.appendChild(el); }
+        el.setAttribute('content', val);
+      }
+      setMeta('og:title', product.name + ' — Madey Design');
+      setMeta('og:description', product.description);
+      setMeta('og:image', absImage);
+      setMeta('og:url', absUrl);
+      setMeta('twitter:title', product.name + ' — Madey Design');
+      setMeta('twitter:description', product.description);
+      setMeta('twitter:image', absImage);
+
+      // JSON-LD
+      const ld = document.createElement('script');
+      ld.type = 'application/ld+json';
+      ld.textContent = JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'Product',
+        name: product.name,
+        description: product.description,
+        image: absImage,
+        url: absUrl,
+        brand: { '@id': 'https://madey.com/#business' },
+        manufacturer: { '@id': 'https://madey.com/#yedam' },
+        offers: { '@type': 'Offer', availability: 'https://schema.org/SoldOut', priceCurrency: 'USD', seller: { '@id': 'https://madey.com/#business' } }
+      });
+      document.head.appendChild(ld);
+
+      // Canonical
+      let canonical = document.querySelector('link[rel="canonical"]');
+      if (!canonical) { canonical = document.createElement('link'); canonical.rel = 'canonical'; document.head.appendChild(canonical); }
+      canonical.href = absUrl;
 
       // Populate fields
       document.getElementById('productCategory').textContent = product.category;
