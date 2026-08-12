@@ -1,5 +1,4 @@
-let blobModule;
-try { blobModule = require('@vercel/blob'); } catch { blobModule = null; }
+const { blobModule, findBlobUrl } = require('./_blob');
 const { Resend }   = require('resend');
 
 const resend          = new Resend(process.env.RESEND_API_KEY);
@@ -13,9 +12,9 @@ const ORDERS_KEY      = 'madey-orders/orders.json';
 async function loadOrders() {
   if (!blobModule || !process.env.BLOB_READ_WRITE_TOKEN) return [];
   try {
-    const blob = await blobModule.get(ORDERS_KEY);
-    if (!blob) return [];
-    const text = await fetch(blob.url).then(r => r.text());
+    const url = await findBlobUrl(ORDERS_KEY);
+    if (!url) return [];
+    const text = await fetch(url).then(r => r.text());
     return JSON.parse(text);
   } catch {
     return [];
@@ -28,6 +27,7 @@ async function saveOrders(orders) {
     access: 'public',
     addRandomSuffix: false,
     contentType: 'application/json',
+    cacheControlMaxAge: 0,
   });
 }
 

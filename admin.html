@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin — Madey Design</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --cream: #f7f3ee;
+      --parchment: #ede8df;
+      --bark: #7a5c3e;
+      --wood: #4a2e14;
+      --ink: #1e160f;
+      --warm: #c9b99a;
+    }
+    body { background: var(--cream); color: var(--ink); font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; min-height: 100vh; }
+    a { color: inherit; }
+    [hidden] { display: none !important; }
+
+    .login-wrap { max-width: 340px; margin: 130px auto; padding: 0 24px; text-align: center; }
+    .login-wrap h1 { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 2rem; margin-bottom: 28px; }
+    .login-wrap input { width: 100%; padding: 12px 14px; border: 1px solid var(--warm); background: #fff; font-size: 14px; margin-bottom: 12px; font-family: 'Inter', sans-serif; }
+    .login-wrap button { width: 100%; padding: 12px; background: var(--wood); color: var(--cream); border: none; font-size: 13px; letter-spacing: 0.08em; cursor: pointer; }
+    .login-wrap button:hover { opacity: 0.9; }
+    .error-msg { color: #a33; font-size: 13px; margin-top: 10px; min-height: 16px; }
+
+    .admin-nav { display: flex; align-items: center; justify-content: space-between; padding: 20px 32px; border-bottom: 1px solid var(--parchment); }
+    .admin-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 300; }
+    .logout-btn { font-size: 12px; letter-spacing: 0.08em; background: none; border: 1px solid var(--warm); padding: 8px 14px; cursor: pointer; color: var(--bark); }
+    .logout-btn:hover { background: var(--parchment); }
+
+    .admin-main { max-width: 900px; margin: 0 auto; padding: 40px 24px 80px; }
+    .admin-main h1 { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 1.6rem; margin: 44px 0 20px; }
+
+    .product-form { background: #fff; border: 1px solid var(--parchment); padding: 28px; display: grid; gap: 14px; }
+    .product-form h2 { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 1.3rem; margin-bottom: 6px; }
+    .field { display: flex; flex-direction: column; gap: 6px; }
+    .field label { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--bark); }
+    .field input[type=text], .field textarea { padding: 10px 12px; border: 1px solid var(--warm); font-family: 'Inter', sans-serif; font-size: 14px; background: #fdfaf7; }
+    .field textarea { min-height: 80px; resize: vertical; }
+    .checkbox-row { display: flex; align-items: center; gap: 8px; font-size: 13px; }
+    .form-actions { display: flex; gap: 12px; align-items: center; }
+    .btn-primary { background: var(--wood); color: var(--cream); border: none; padding: 11px 22px; font-size: 13px; letter-spacing: 0.06em; cursor: pointer; }
+    .btn-primary:hover { opacity: 0.9; }
+    .btn-primary:disabled { opacity: 0.5; cursor: default; }
+    .btn-secondary { background: none; border: 1px solid var(--warm); color: var(--bark); padding: 11px 22px; font-size: 13px; letter-spacing: 0.06em; cursor: pointer; }
+    .form-msg { font-size: 13px; }
+    .form-msg.error { color: #a33; }
+    .form-msg.ok { color: #2a6b3c; }
+    .preview-img { width: 100px; height: 100px; object-fit: cover; border: 1px solid var(--parchment); margin-top: 6px; display: none; }
+
+    .product-list { display: grid; gap: 12px; }
+    .product-row { display: flex; gap: 16px; align-items: center; background: #fff; border: 1px solid var(--parchment); padding: 14px 16px; }
+    .product-row img { width: 56px; height: 56px; object-fit: cover; flex-shrink: 0; background: var(--parchment); }
+    .product-row .info { flex: 1; min-width: 0; }
+    .product-row .info .name { font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; }
+    .product-row .info .meta { font-size: 11px; color: var(--bark); letter-spacing: 0.04em; margin-top: 2px; }
+    .product-row .actions { display: flex; gap: 8px; flex-shrink: 0; }
+    .icon-btn { background: none; border: 1px solid var(--warm); padding: 7px 12px; font-size: 12px; cursor: pointer; color: var(--bark); }
+    .icon-btn:hover { background: var(--parchment); }
+    .icon-btn.danger { color: #a33; border-color: #d9a; }
+    .empty-note { font-size: 13px; color: var(--bark); }
+  </style>
+</head>
+<body>
+
+  <div id="loginView" class="login-wrap">
+    <h1>madey admin</h1>
+    <input type="password" id="passwordInput" placeholder="password" autocomplete="current-password" />
+    <button id="loginBtn">log in</button>
+    <p class="error-msg" id="loginError"></p>
+  </div>
+
+  <div id="adminView" hidden>
+    <nav class="admin-nav">
+      <span class="admin-logo">madey admin</span>
+      <button class="logout-btn" id="logoutBtn">log out</button>
+    </nav>
+
+    <div class="admin-main">
+      <form class="product-form" id="productForm">
+        <h2 id="formTitle">Add a product</h2>
+        <div class="field">
+          <label for="fieldName">Name</label>
+          <input type="text" id="fieldName" required />
+        </div>
+        <div class="field">
+          <label for="fieldCategory">Category</label>
+          <input type="text" id="fieldCategory" list="categoryOptions" placeholder="Turned Wood" />
+          <datalist id="categoryOptions"></datalist>
+        </div>
+        <div class="field">
+          <label for="fieldDescription">Description</label>
+          <textarea id="fieldDescription" required></textarea>
+        </div>
+        <div class="field">
+          <label for="fieldImage">Photo</label>
+          <input type="file" id="fieldImage" accept="image/*" />
+          <img id="imagePreview" class="preview-img" alt="" />
+        </div>
+        <label class="checkbox-row"><input type="checkbox" id="fieldWb" /> cool white-balance filter</label>
+        <label class="checkbox-row"><input type="checkbox" id="fieldSold" checked /> sold (shows "inquire to commission")</label>
+        <div class="form-actions">
+          <button type="submit" class="btn-primary" id="submitBtn">add product</button>
+          <button type="button" class="btn-secondary" id="cancelEditBtn" hidden>cancel</button>
+          <span class="form-msg" id="formMsg"></span>
+        </div>
+      </form>
+
+      <h1>Products</h1>
+      <div class="product-list" id="productList"></div>
+    </div>
+  </div>
+
+  <script>
+    const loginView = document.getElementById('loginView');
+    const adminView = document.getElementById('adminView');
+    const passwordInput = document.getElementById('passwordInput');
+    const loginBtn = document.getElementById('loginBtn');
+    const loginError = document.getElementById('loginError');
+    const logoutBtn = document.getElementById('logoutBtn');
+    const productForm = document.getElementById('productForm');
+    const productList = document.getElementById('productList');
+    const formTitle = document.getElementById('formTitle');
+    const submitBtn = document.getElementById('submitBtn');
+    const cancelEditBtn = document.getElementById('cancelEditBtn');
+    const formMsg = document.getElementById('formMsg');
+    const fieldImage = document.getElementById('fieldImage');
+    const imagePreview = document.getElementById('imagePreview');
+    const categoryOptions = document.getElementById('categoryOptions');
+
+    let editingId = null;
+    let pendingImageData = null;
+    let currentImageUrl = '';
+    let currentProducts = [];
+
+    async function api(path, options) {
+      const res = await fetch(path, Object.assign({ headers: { 'Content-Type': 'application/json' } }, options));
+      if (res.status === 401) throw { unauthorized: true };
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data.error || 'Something went wrong');
+      return data;
+    }
+
+    passwordInput.addEventListener('keydown', e => { if (e.key === 'Enter') loginBtn.click(); });
+
+    loginBtn.addEventListener('click', async () => {
+      loginError.textContent = '';
+      try {
+        await api('/api/admin-login', { method: 'POST', body: JSON.stringify({ password: passwordInput.value }) });
+        passwordInput.value = '';
+        showAdmin();
+      } catch (e) {
+        loginError.textContent = e.message || 'Wrong password';
+      }
+    });
+
+    logoutBtn.addEventListener('click', async () => {
+      await fetch('/api/admin-logout', { method: 'POST' });
+      location.reload();
+    });
+
+    function resizeImage(file) {
+      return new Promise((resolve, reject) => {
+        const img = new Image();
+        const reader = new FileReader();
+        reader.onload = () => {
+          img.onload = () => {
+            const maxDim = 1600;
+            let { width, height } = img;
+            if (width > maxDim || height > maxDim) {
+              if (width > height) { height = Math.round(height * maxDim / width); width = maxDim; }
+              else { width = Math.round(width * maxDim / height); height = maxDim; }
+            }
+            const canvas = document.createElement('canvas');
+            canvas.width = width; canvas.height = height;
+            canvas.getContext('2d').drawImage(img, 0, 0, width, height);
+            resolve(canvas.toDataURL('image/jpeg', 0.85));
+          };
+          img.onerror = reject;
+          img.src = reader.result;
+        };
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    }
+
+    fieldImage.addEventListener('change', async () => {
+      const file = fieldImage.files[0];
+      if (!file) return;
+      pendingImageData = await resizeImage(file);
+      imagePreview.src = pendingImageData;
+      imagePreview.style.display = 'block';
+    });
+
+    function resetForm() {
+      editingId = null;
+      pendingImageData = null;
+      currentImageUrl = '';
+      productForm.reset();
+      document.getElementById('fieldSold').checked = true;
+      imagePreview.style.display = 'none';
+      formTitle.textContent = 'Add a product';
+      submitBtn.textContent = 'add product';
+      cancelEditBtn.hidden = true;
+      formMsg.textContent = '';
+      formMsg.className = 'form-msg';
+    }
+
+    cancelEditBtn.addEventListener('click', resetForm);
+
+    function fillFormForEdit(p) {
+      editingId = p.id;
+      currentImageUrl = p.image;
+      pendingImageData = null;
+      document.getElementById('fieldName').value = p.name;
+      document.getElementById('fieldCategory').value = p.category || '';
+      document.getElementById('fieldDescription').value = p.description;
+      document.getElementById('fieldWb').checked = !!p.wb;
+      document.getElementById('fieldSold').checked = p.sold !== false;
+      imagePreview.src = p.image;
+      imagePreview.style.display = 'block';
+      formTitle.textContent = 'Edit product';
+      submitBtn.textContent = 'save changes';
+      cancelEditBtn.hidden = false;
+      formMsg.textContent = '';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    productForm.addEventListener('submit', async e => {
+      e.preventDefault();
+      formMsg.textContent = '';
+      formMsg.className = 'form-msg';
+
+      if (!editingId && !pendingImageData) {
+        formMsg.textContent = 'Add a photo first.';
+        formMsg.className = 'form-msg error';
+        return;
+      }
+
+      const payload = {
+        name: document.getElementById('fieldName').value.trim(),
+        category: document.getElementById('fieldCategory').value.trim(),
+        description: document.getElementById('fieldDescription').value.trim(),
+        wb: document.getElementById('fieldWb').checked,
+        sold: document.getElementById('fieldSold').checked,
+      };
+      if (pendingImageData) payload.imageData = pendingImageData;
+      else if (currentImageUrl) payload.image = currentImageUrl;
+
+      submitBtn.disabled = true;
+      try {
+        if (editingId) {
+          payload.id = editingId;
+          const updated = await api('/api/admin-products', { method: 'PUT', body: JSON.stringify(payload) });
+          const idx = currentProducts.findIndex(p => p.id === updated.id);
+          if (idx !== -1) currentProducts[idx] = updated; else currentProducts.push(updated);
+          formMsg.textContent = 'Saved.';
+        } else {
+          const created = await api('/api/admin-products', { method: 'POST', body: JSON.stringify(payload) });
+          currentProducts.push(created);
+          formMsg.textContent = 'Added.';
+        }
+        formMsg.className = 'form-msg ok';
+        resetForm();
+        renderProducts();
+      } catch (err) {
+        if (err.unauthorized) return showLogin();
+        formMsg.textContent = err.message;
+        formMsg.className = 'form-msg error';
+      } finally {
+        submitBtn.disabled = false;
+      }
+    });
+
+    function escapeHtml(s) {
+      return String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    }
+
+    function renderProducts() {
+      categoryOptions.innerHTML = [...new Set(currentProducts.map(p => p.category).filter(Boolean))]
+        .map(c => `<option value="${escapeHtml(c)}"></option>`).join('');
+
+      if (!currentProducts.length) {
+        productList.innerHTML = '<p class="empty-note">No products yet.</p>';
+        return;
+      }
+
+      productList.innerHTML = '';
+      currentProducts.forEach(p => {
+        const row = document.createElement('div');
+        row.className = 'product-row';
+        row.innerHTML = `
+          <img src="${p.image}" alt="" />
+          <div class="info">
+            <div class="name">${escapeHtml(p.name)}</div>
+            <div class="meta">${escapeHtml(p.category || '')} · ${p.sold === false ? 'available' : 'sold'}</div>
+          </div>
+          <div class="actions">
+            <button class="icon-btn" data-action="edit">edit</button>
+            <button class="icon-btn danger" data-action="delete">delete</button>
+          </div>`;
+        row.querySelector('[data-action="edit"]').addEventListener('click', () => fillFormForEdit(p));
+        row.querySelector('[data-action="delete"]').addEventListener('click', () => deleteProduct(p));
+        productList.appendChild(row);
+      });
+    }
+
+    async function loadProducts() {
+      try {
+        currentProducts = await api('/api/admin-products');
+      } catch (e) {
+        if (e.unauthorized) return showLogin();
+        productList.textContent = 'Could not load products.';
+        return;
+      }
+      renderProducts();
+    }
+
+    async function deleteProduct(p) {
+      if (!confirm(`Delete "${p.name}"? This can't be undone.`)) return;
+      try {
+        await api('/api/admin-products?id=' + encodeURIComponent(p.id), { method: 'DELETE' });
+        currentProducts = currentProducts.filter(x => x.id !== p.id);
+        renderProducts();
+      } catch (e) {
+        if (e.unauthorized) return showLogin();
+        alert(e.message);
+      }
+    }
+
+    function showAdmin() {
+      loginView.hidden = true;
+      adminView.hidden = false;
+      resetForm();
+      loadProducts();
+    }
+    function showLogin() {
+      adminView.hidden = true;
+      loginView.hidden = false;
+    }
+
+    (async () => {
+      try {
+        await api('/api/admin-products');
+        showAdmin();
+      } catch {
+        showLogin();
+      }
+    })();
+  </script>
+</body>
+</html>
